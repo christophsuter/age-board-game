@@ -1,6 +1,6 @@
 package ch.hslu.testing;
 
-import ch.hslu.testing.internal.AgeBoardGameResource;
+import ch.hslu.testing.boundry.AgeBoardGameResource;
 import ch.hslu.testing.internal.AuthenticationConfiguration;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
