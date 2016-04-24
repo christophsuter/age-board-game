@@ -1,9 +1,7 @@
-package ch.hslu.testing.model;
+package ch.hslu.testing.domain.model;
 
-import ch.hslu.testing.model.unit.*;
+import ch.hslu.testing.domain.model.unit.*;
 
-import javax.lang.model.type.TypeKind;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +9,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Created by Christoph on 23.04.2016.

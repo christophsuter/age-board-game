@@ -1,10 +1,9 @@
-package ch.hslu.testing.model;
+package ch.hslu.testing.domain.model;
 
-import ch.hslu.testing.model.unit.Position;
-import ch.hslu.testing.model.unit.Unit;
+import ch.hslu.testing.domain.model.unit.Position;
+import ch.hslu.testing.domain.model.unit.Unit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 

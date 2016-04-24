@@ -1,8 +1,6 @@
-package ch.hslu.testing.model.unit;
+package ch.hslu.testing.domain.model.unit;
 
-import ch.hslu.testing.model.GameField;
-
-import java.awt.*;
+import ch.hslu.testing.domain.model.GameField;
 
 /**
  * Created by Christoph on 23.04.2016.

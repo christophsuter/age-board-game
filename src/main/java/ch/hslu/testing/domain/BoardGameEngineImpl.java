@@ -1,13 +1,12 @@
 package ch.hslu.testing.domain;
 
-import ch.hslu.testing.model.GameState;
-import ch.hslu.testing.model.GameStateFactory;
-import ch.hslu.testing.model.Player;
-import ch.hslu.testing.model.actions.PlayerAction;
-import ch.hslu.testing.model.unit.Position;
-import ch.hslu.testing.model.unit.Unit;
+import ch.hslu.testing.domain.model.GameState;
+import ch.hslu.testing.domain.model.GameStateFactory;
+import ch.hslu.testing.domain.model.Player;
+import ch.hslu.testing.domain.model.actions.PlayerAction;
+import ch.hslu.testing.domain.model.unit.Position;
+import ch.hslu.testing.domain.model.unit.Unit;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

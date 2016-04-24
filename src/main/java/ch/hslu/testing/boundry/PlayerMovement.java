@@ -1,6 +1,6 @@
 package ch.hslu.testing.boundry;
 
-import ch.hslu.testing.model.Player;
+import ch.hslu.testing.domain.model.Player;
 
 /**
  * Created by Christoph on 24.04.2016.

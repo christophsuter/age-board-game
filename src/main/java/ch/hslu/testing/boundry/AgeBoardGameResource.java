@@ -2,10 +2,10 @@ package ch.hslu.testing.boundry;
 
 import ch.hslu.testing.domain.BoardGameEngine;
 import ch.hslu.testing.domain.IllegalAcionException;
-import ch.hslu.testing.model.GameState;
-import ch.hslu.testing.model.Player;
-import ch.hslu.testing.model.actions.MovementAction;
-import ch.hslu.testing.model.actions.PlayerAction;
+import ch.hslu.testing.domain.model.GameState;
+import ch.hslu.testing.domain.model.Player;
+import ch.hslu.testing.domain.model.actions.MovementAction;
+import ch.hslu.testing.domain.model.actions.PlayerAction;
 import com.google.inject.Inject;
 
 import javax.ws.rs.*;

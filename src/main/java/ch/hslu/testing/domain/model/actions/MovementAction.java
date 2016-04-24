@@ -1,13 +1,10 @@
-package ch.hslu.testing.model.actions;
+package ch.hslu.testing.domain.model.actions;
 
 import ch.hslu.testing.boundry.PlayerMovement;
 import ch.hslu.testing.domain.IllegalAcionException;
-import ch.hslu.testing.model.GameState;
-import ch.hslu.testing.model.Player;
-import ch.hslu.testing.model.unit.Position;
-import ch.hslu.testing.model.unit.Unit;
-
-import java.util.List;
+import ch.hslu.testing.domain.model.GameState;
+import ch.hslu.testing.domain.model.unit.Position;
+import ch.hslu.testing.domain.model.unit.Unit;
 
 /**
  * Created by Christoph on 24.04.2016.
@@ -39,25 +36,27 @@ public class MovementAction extends PlayerAction {
         int xNow = actingUnit.getPosition().x;
         int xNext = xNow + xMovement;
         int xMax = actingUnit.getGameField().getWidth();
+        int xMin = actingUnit.getGameField().getStartX();
 
         if(xNext > xMax) {
             xNext = xMax;
         }
 
-        if(xNext < 0) {
-            xNext = 0;
+        if(xNext < xMin) {
+            xNext = xMin;
         }
 
         int yNow = actingUnit.getPosition().y;
         int yNext = yNow + yMovement;
         int yMax = actingUnit.getGameField().getHeight();
+        int yMin = actingUnit.getGameField().getStartY();
 
         if(yNext > yMax) {
             yNext = yMax;
         }
 
-        if(yNext < 0) {
-            yNext = 0;
+        if(yNext < yMin) {
+            yNext = yMin;
         }
 
         actingUnit.setPosition(new Position(xNext, yNext));

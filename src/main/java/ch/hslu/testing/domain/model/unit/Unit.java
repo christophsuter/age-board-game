@@ -1,6 +1,6 @@
-package ch.hslu.testing.model.unit;
+package ch.hslu.testing.domain.model.unit;
 
-import ch.hslu.testing.model.GameField;
+import ch.hslu.testing.domain.model.GameField;
 
 
 /**

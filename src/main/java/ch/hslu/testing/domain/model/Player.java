@@ -1,4 +1,4 @@
-package ch.hslu.testing.model;
+package ch.hslu.testing.domain.model;
 
 /**
  * Created by Christoph on 23.04.2016.

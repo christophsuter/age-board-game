@@ -1,4 +1,4 @@
-package ch.hslu.testing.model;
+package ch.hslu.testing.domain.model;
 
 import java.awt.*;
 
@@ -7,17 +7,24 @@ import java.awt.*;
  */
 public class GameField {
 
+    private final int startX;
+    private final int startY;
+
     private final int width;
     private final int height;
 
     public GameField(int width, int height) {
         this.width = width;
         this.height = height;
+
+        startX = 0;
+        startY = 0;
     }
 
     public boolean isInField(Point position) {
-        if((position.x >= 0) && (position.x <= width)) {
-            if((position.y >= 0) && (position.y <= height)) {
+
+        if((position.x >= startX) && (position.x <= width)) {
+            if((position.y >= startY) && (position.y <= height)) {
                 return true;
             }
         }
@@ -32,4 +39,8 @@ public class GameField {
     public int getHeight() {
         return height;
     }
+
+    public int getStartX() { return startX; }
+
+    public int getStartY() { return startY; }
 }

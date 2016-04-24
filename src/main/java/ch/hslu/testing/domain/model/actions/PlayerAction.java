@@ -1,7 +1,7 @@
-package ch.hslu.testing.model.actions;
+package ch.hslu.testing.domain.model.actions;
 
-import ch.hslu.testing.model.GameState;
-import ch.hslu.testing.model.unit.Unit;
+import ch.hslu.testing.domain.model.GameState;
+import ch.hslu.testing.domain.model.unit.Unit;
 
 /**
  * Created by Christoph on 23.04.2016.

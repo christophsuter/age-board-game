@@ -1,8 +1,8 @@
 package ch.hslu.testing.domain;
 
-import ch.hslu.testing.model.GameState;
-import ch.hslu.testing.model.Player;
-import ch.hslu.testing.model.actions.PlayerAction;
+import ch.hslu.testing.domain.model.GameState;
+import ch.hslu.testing.domain.model.Player;
+import ch.hslu.testing.domain.model.actions.PlayerAction;
 
 /**
  * Created by Christoph on 23.04.2016.
