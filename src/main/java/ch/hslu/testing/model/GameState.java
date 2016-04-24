@@ -1,9 +1,8 @@
 package ch.hslu.testing.model;
 
-import ch.hslu.testing.model.unit.Crossbow;
-import ch.hslu.testing.model.unit.Knight;
-import ch.hslu.testing.model.unit.Pikeman;
+import ch.hslu.testing.model.unit.Position;
 import ch.hslu.testing.model.unit.Unit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.awt.*;
 import java.util.*;
@@ -13,14 +12,12 @@ import java.util.List;
  * Created by Christoph on 23.04.2016.
  */
 public class GameState {
-    private final int width;
-    private final int height;
+    private final GameField gameField;
 
     private final Map<Player, List<Unit>> units;
 
-    public GameState(int width, int height, Map<Player, List<Unit>> units) {
-        this.width = width;
-        this.height = height;
+    public GameState(GameField gameField, Map<Player, List<Unit>> units) {
+        this.gameField = gameField;
         this.units = units;
     }
 
@@ -43,11 +40,80 @@ public class GameState {
         }
     }
 
+    @JsonIgnore
     public final Set<Player> getPlayers() {
         return units.keySet();
     }
 
-    //TODO: What if both are dead??
+    /**
+     * Get EnemyUnit which is in range of the given Units.
+     * If Several Units are found, the unit with the lowest Health is returned.
+     * @param player Player which is searching.
+     * @param unit Unit which is searching.
+     * @return EnemyUnit or empty.
+     */
+    public Optional<Unit> getEnemyInSight(Player player, Unit unit) {
+
+        Position position = unit.getPosition();
+        int range = unit.getAttackDistance();
+
+        return getEnemyUnits(player).stream()
+                .filter(enemyUnit -> {
+                    Position enemyPosition = enemyUnit.getPosition();
+                    int distance = Math.abs(position.x - enemyPosition.x) +
+                            Math.abs(position.y - enemyPosition.y);
+                    return distance <= range;
+                })
+                .filter(enemyUnit -> enemyUnit.getHealth() > 0)
+                .sorted((l, r) -> l.getHealth() - r.getHealth())
+                .findFirst();
+    }
+
+    public List<Unit> getEnemyUnits(Player friendlyPlayer) {
+        List<Unit> enemyUnits = new ArrayList<>();
+
+        for (Player player : getPlayers()) {
+            if (player != friendlyPlayer) {
+                enemyUnits.addAll(units.get(player));
+            }
+        }
+        return enemyUnits;
+    }
+
+
+    public GameField getGameField() {
+        return gameField;
+    }
+
+    public Map<Player, List<Unit>> getUnits() {
+        return units;
+    }
+
+    public List getUnits(Player player) {
+        return units.get(player);
+    }
+
+    /**
+     * If there are no units left the game is finished.
+     * @return true if there are no more units.
+     */
+    @JsonIgnore
+    public boolean isFinished() {
+        for (Player player : getPlayers()) {
+            List<Unit> playerUnits = units.get(player);
+            if (!playerUnits.isEmpty()) {
+                return  false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * If there is only one Player with alive units. Then he/she is the winner.
+     * @return Winner player or empty: game is not finished or draw.
+     */
+    @JsonIgnore
     public Optional<Player> getWinner() {
         Player winner = null;
 
@@ -64,34 +130,14 @@ public class GameState {
         return Optional.of(winner);
     }
 
-    public Optional<Unit> getEnemyInSight(Player player, Point position, int range) {
-        return getEnemyUnits(player).stream()
-                .filter(unit -> {
-                    Point enemyPosition = unit.getPostion();
-                    int distance = Math.abs(position.x - enemyPosition.x) +
-                            Math.abs(position.y - enemyPosition.y);
-                    return distance <= range;
-                }).sorted((l, r) -> l.getHealth() - r.getHealth())
-                .findFirst();
-    }
-
-
-    public List<Unit> getEnemyUnits(Player friendlyPlayer) {
-        List<Unit> enemyUnits = new ArrayList<>();
-
-        for (Player player : getPlayers()) {
-            if (player != friendlyPlayer) {
-                enemyUnits.addAll(units.get(player));
+    public Unit getUnit(int unitId) {
+        for(List<Unit> playerUnits: units.values()) {
+            for(Unit unit: playerUnits) {
+                if(unit.getUnitId() == unitId) {
+                    return unit;
+                }
             }
         }
-        return enemyUnits;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
+        return null;
     }
 }

@@ -1,6 +1,8 @@
 package ch.hslu.testing;
 
 import ch.hslu.testing.boundry.AgeBoardGameResource;
+import ch.hslu.testing.domain.BoardGameEngine;
+import ch.hslu.testing.domain.BoardGameEngineImpl;
 import ch.hslu.testing.internal.AuthenticationConfiguration;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -80,6 +82,7 @@ public class AgeBoardGameApp extends Application<AuthenticationConfiguration> {
             @Override
             protected void configure() {
                 bind(AuthenticationConfiguration.class).toInstance(conf);
+                bind(BoardGameEngine.class).to(BoardGameEngineImpl.class);
                 bind(ObjectMapper.class).toInstance(env.getObjectMapper());
             }
         });

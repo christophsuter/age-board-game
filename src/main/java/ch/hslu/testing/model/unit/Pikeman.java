@@ -1,5 +1,7 @@
 package ch.hslu.testing.model.unit;
 
+import ch.hslu.testing.model.GameField;
+
 import java.awt.*;
 
 /**
@@ -13,8 +15,8 @@ public class Pikeman extends Unit {
     private static final int PIKEMAN_HORSE_ATTACK = 25;
     private static final int PIKEMAN_ATTACK = 4;
 
-    public Pikeman(Point startingPosition) {
-        super(startingPosition, PIKEMAN_HEALTH, PIKEMAN_MOVEMENT_SPEED, PIKEMAN_ATTACK_RANGE, false, false);
+    public Pikeman(Position startingPosition, GameField gameField) {
+        super(startingPosition, gameField, "Pikeman", PIKEMAN_HEALTH, PIKEMAN_MOVEMENT_SPEED, PIKEMAN_ATTACK_RANGE, false, false);
     }
 
     public int calculateDamage(Unit enemyUnit) {

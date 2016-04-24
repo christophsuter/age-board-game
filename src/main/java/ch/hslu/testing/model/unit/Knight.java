@@ -1,5 +1,7 @@
 package ch.hslu.testing.model.unit;
 
+import ch.hslu.testing.model.GameField;
+
 import java.awt.*;
 
 /**
@@ -13,8 +15,8 @@ public class Knight extends Unit {
     public static final int KNIGHT_XBOW_ATTACK = 12;
     public static final int KNIGHT_NORMAL_ATTACK = 10;
 
-    public Knight(Point startingPosition) {
-        super(startingPosition, KNIGHT_HEALTH, KNIGHT_MOVEMENT_SPEED, KNIGHT_ATTACK_RANGE, true, false);
+    public Knight(Position startingPosition, GameField gameField) {
+        super(startingPosition, gameField, "Knight", KNIGHT_HEALTH, KNIGHT_MOVEMENT_SPEED, KNIGHT_ATTACK_RANGE, true, false);
     }
 
     public int calculateDamage(Unit enemyUnit) {

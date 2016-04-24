@@ -1,6 +1,7 @@
 package ch.hslu.testing.model.unit;
 
-import java.awt.Point;
+import ch.hslu.testing.model.GameField;
+
 
 /**
  * Created by Christoph on 23.04.2016.
@@ -9,24 +10,34 @@ public abstract class Unit {
 
     private static int UNIT_ID;
     private final int unitId;
+    private final String name;
     private final int movementSpeed;
     private final int attackDistance;
     private final boolean horse;
     private final boolean archer;
+    private final GameField gameField;
     private int health;
-    private Point postion;
+    private Position position;
 
-    public Unit(Point startingPosition, int health, int movementSpeed, int attackDistance, boolean horse, boolean archer) {
+
+    public Unit(Position startingPosition, GameField gameField, String name, int health, int movementSpeed, int attackDistance, boolean horse, boolean archer) {
         unitId = UNIT_ID++;
-
+        this.name = name;
         this.health = health;
+        this.gameField = gameField;
         this.movementSpeed = movementSpeed;
         this.attackDistance = attackDistance;
         this.horse = horse;
         this.archer = archer;
-        this.postion = startingPosition;
+        this.position = startingPosition;
     }
 
+
+    public int getUnitId() {
+        return unitId;
+    }
+
+    public String getName() { return name; }
 
     public int getHealth() {
         return health;
@@ -44,9 +55,11 @@ public abstract class Unit {
         return movementSpeed;
     }
 
-    public Point getPostion() {
-        return postion;
+    public Position getPosition() {
+        return position;
     }
+
+    public void setPosition(Position position) { this.position = position; }
 
     public boolean isHorse() {
         return horse;
@@ -58,6 +71,10 @@ public abstract class Unit {
 
     public boolean isDead() {
         return health <= 0;
+    }
+
+    public GameField getGameField() {
+        return gameField;
     }
 
     abstract public int calculateDamage(Unit enemyUnit);
@@ -72,10 +89,10 @@ public abstract class Unit {
         return unitId == unit.unitId;
     }
 
+
     @Override
     public int hashCode() {
         return unitId;
     }
-
 
 }

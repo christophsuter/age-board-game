@@ -1,9 +1,6 @@
 package ch.hslu.testing.model;
 
-import ch.hslu.testing.model.unit.Crossbow;
-import ch.hslu.testing.model.unit.Knight;
-import ch.hslu.testing.model.unit.Pikeman;
-import ch.hslu.testing.model.unit.Unit;
+import ch.hslu.testing.model.unit.*;
 
 import javax.lang.model.type.TypeKind;
 import java.awt.*;
@@ -28,23 +25,25 @@ public class GameStateFactory {
         //Not needed its a Factory.
     }
 
-    public static GameState createInitialGameState(Map<Player, Point> startingPositions, int knightCount, int crossbowCount, int pikeCount) {
+    public static GameState createInitialGameState(Map<Player, Position> startingPositions, int knightCount, int crossbowCount, int pikeCount) {
         Map<Player, List<Unit>> units = new HashMap<>();
 
+        GameField gameField = new GameField(MAP_SIZE, MAP_SIZE);
+
         for (Player player : startingPositions.keySet()) {
-            List<Unit> playerUnits = createUnits(knightCount, crossbowCount, pikeCount, startingPositions.get(player));
+            List<Unit> playerUnits = createUnits(knightCount, crossbowCount, pikeCount, startingPositions.get(player), gameField);
             units.put(player, playerUnits);
         }
 
-        return new GameState(MAP_SIZE, MAP_SIZE, units);
+        return new GameState(gameField, units);
     }
 
-    private static List<Unit> createUnits(int knightCount, int crossbowCount, int pikeCount, Point startingPosition) {
+    private static List<Unit> createUnits(int knightCount, int crossbowCount, int pikeCount, Position startingPosition, GameField gameField) {
         List<Unit> units = new ArrayList<>();
 
-        units.addAll(createUnits(knightCount, (i) -> new Knight(startingPosition)));
-        units.addAll(createUnits(crossbowCount, (i) -> new Crossbow(startingPosition)));
-        units.addAll(createUnits(pikeCount, (i) -> new Pikeman(startingPosition)));
+        units.addAll(createUnits(knightCount, (i) -> new Knight(startingPosition, gameField)));
+        units.addAll(createUnits(crossbowCount, (i) -> new Crossbow(startingPosition, gameField)));
+        units.addAll(createUnits(pikeCount, (i) -> new Pikeman(startingPosition, gameField)));
 
         return units;
     }
