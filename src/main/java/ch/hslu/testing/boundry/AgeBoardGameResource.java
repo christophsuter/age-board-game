@@ -1,6 +1,6 @@
 package ch.hslu.testing.boundry;
 
-import ch.hslu.testing.domain.BoardGameEngine;
+import ch.hslu.testing.domain.AgeBoardGameEngine;
 import ch.hslu.testing.domain.IllegalAcionException;
 import ch.hslu.testing.domain.model.GameState;
 import ch.hslu.testing.domain.model.actions.MovementAction;
@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 public class AgeBoardGameResource {
 
     @Inject
-    private BoardGameEngine boardGameEngine;
+    private AgeBoardGameEngine ageBoardGameEngine;
 
 
     /**
@@ -26,7 +26,7 @@ public class AgeBoardGameResource {
      */
     @PUT
     public void createGame() {
-        boardGameEngine.initGame();
+        ageBoardGameEngine.initGame();
     }
 
     /**
@@ -38,7 +38,7 @@ public class AgeBoardGameResource {
     @GET
     @Path("game-state")
     public GameState getGameState() {
-        return boardGameEngine.getGameState();
+        return ageBoardGameEngine.getGameState();
     }
 
     /**
@@ -51,7 +51,7 @@ public class AgeBoardGameResource {
     @Path("winner")
     @Produces("text/plain")
     public String getWinner() {
-        GameState gameState = boardGameEngine.getGameState();
+        GameState gameState = ageBoardGameEngine.getGameState();
         if (gameState.isFinished()) {
             return gameState.getWinner()
                     .map(player -> "Player " + player.name() + " won the game.")
@@ -71,7 +71,7 @@ public class AgeBoardGameResource {
 
         try {
             PlayerAction action = MovementAction.from(new PlayerMovement(unitId, xMovement, yMovement), getGameState());
-            boardGameEngine.preparePlayerAction(action);
+            ageBoardGameEngine.preparePlayerAction(action);
         } catch (IllegalAcionException ex) {
             throw new RuntimeException(ex);
         }
@@ -82,7 +82,7 @@ public class AgeBoardGameResource {
     @Path("attack")
     public void doAttack() {
         try {
-            boardGameEngine.executePlayerActions();
+            ageBoardGameEngine.executePlayerActions();
         } catch (IllegalAcionException ex) {
             throw new RuntimeException(ex);
         }

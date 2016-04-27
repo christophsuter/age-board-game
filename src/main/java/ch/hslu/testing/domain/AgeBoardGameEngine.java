@@ -7,7 +7,7 @@ import ch.hslu.testing.domain.model.unit.Unit;
 /**
  * Created by Christoph on 23.04.2016.
  */
-public interface BoardGameEngine {
+public interface AgeBoardGameEngine {
 
     /**
      * Initializes the game.

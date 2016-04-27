@@ -15,13 +15,13 @@ import java.util.Optional;
 /**
  * Created by Christoph on 23.04.2016.
  */
-public class BoardGameEngineImpl implements BoardGameEngine {
+public class AgeBoardGameEngineImpl implements AgeBoardGameEngine {
 
     private final Map<Player, Position> startingPositions;
     private GameState gameState;
     private Map<Player, PlayerAction> stagedActions;
 
-    public BoardGameEngineImpl() {
+    public AgeBoardGameEngineImpl() {
         startingPositions = new HashMap<>();
 
         startingPositions.put(Player.Blue, new Position(0, 0));
