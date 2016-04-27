@@ -1,6 +1,5 @@
 package ch.hslu.testing.domain.model;
 
-import ch.hslu.testing.domain.model.unit.Position;
 import ch.hslu.testing.domain.model.unit.Unit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -10,6 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * State of the Age-Board-Game.
+ * Containing following fields:
+ * <ul>
+ * <li>GameField</li>
+ * <li>List of Units</li>
+ * </ul>
  * Created by Christoph on 23.04.2016.
  */
 public class GameState {
@@ -17,49 +22,26 @@ public class GameState {
 
     private final List<Unit> units;
 
-    public GameState(GameField gameField, List<Unit> units) {
+    protected GameState(GameField gameField, List<Unit> units) {
         this.gameField = gameField;
         this.units = units;
     }
 
     /**
-     * A changed unit is updated. If the unit is dead, it will be removed.
-     *
-     * @param updatedUnit
-     */
-    public void updateUnit(Unit updatedUnit) {
-        int unitIndex = units.indexOf(updatedUnit);
-
-        if (unitIndex >= 0) { //Add error here > 0
-            units.remove(unitIndex);
-
-            if (!updatedUnit.isDead()) {
-                units.add(unitIndex, updatedUnit);
-            }
-        }
-    }
-
-    /**
      * Get EnemyUnit which is in range of the given Units.
-     * If Several Units are found, the unit with the lowest Health is returned.
+     * If Several Units are found, the unit with the lowest health is returned.
      *
      * @param player Player which is searching.
      * @param unit   Unit which is searching.
      * @return EnemyUnit or empty.
      */
     public Optional<Unit> getEnemyInSight(Player player, Unit unit) {
-
         Position position = unit.getPosition();
         int range = unit.getAttackDistance();
 
         return getEnemyUnits(player).stream()
-                .filter(enemyUnit -> {
-                    Position enemyPosition = enemyUnit.getPosition();
-                    int distance = Math.abs(position.x - enemyPosition.x) +
-                            Math.abs(position.y - enemyPosition.y);
-                    return distance <= range;
-                })
-                .filter(enemyUnit -> enemyUnit.getHealth() > 0)
+                .filter(Unit::isAlive)
+                .filter(enemyUnit -> unit.isEnemyInRange(enemyUnit))
                 .sorted((l, r) -> l.getHealth() - r.getHealth())
                 .findFirst();
     }
@@ -74,7 +56,6 @@ public class GameState {
         return units.stream()
                 .filter(u -> u.getPlayer() == player)
                 .collect(Collectors.toList());
-
     }
 
     /**
@@ -113,7 +94,9 @@ public class GameState {
         return gameField;
     }
 
-    public List<Unit> getUnits() { return units; }
+    public List<Unit> getUnits() {
+        return units;
+    }
 
     @JsonIgnore
     private final Set<Player> getAlivePlayers() {

@@ -2,10 +2,29 @@ package ch.hslu.testing.domain.model.unit;
 
 import ch.hslu.testing.domain.model.GameField;
 import ch.hslu.testing.domain.model.Player;
+import ch.hslu.testing.domain.model.Position;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
+ * Basic class of an Unit. Containing the following fields:
+ * <ul>
+ * <li>Id</li>
+ * <li>Player owning the unit</li>
+ * <li>Remaining health</li>
+ * <li>Position on the field</li>
+ * <li>GammeField on which the unit is on.</li>
+ * <li>Movement speed of the unit.</li>
+ * <li>Attack distance of the Unit.</li>
+ * <li>flags for:
+ * <ul>
+ * <li>horse</li>
+ * <li>archer</li>
+ * </ul>
+ * </li>
+ * </ul>
+ * <p>
+ * This class provides functionality to check if the unit is dead.
  * Created by Christoph on 23.04.2016.
  */
 public abstract class Unit {
@@ -102,4 +121,14 @@ public abstract class Unit {
         return unitId;
     }
 
+    @JsonIgnore
+    public boolean isAlive() { return !isDead(); }
+
+    @JsonIgnore
+    public boolean isEnemyInRange(Unit enemyUnit) {
+        Position enemyPosition = enemyUnit.getPosition();
+        int distanceToEnemy = Math.abs(position.x - enemyPosition.x) +
+                Math.abs(position.y - enemyPosition.y);
+        return distanceToEnemy <= getAttackDistance();
+    }
 }

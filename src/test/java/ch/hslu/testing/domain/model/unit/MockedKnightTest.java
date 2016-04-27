@@ -2,6 +2,7 @@ package ch.hslu.testing.domain.model.unit;
 
 import ch.hslu.testing.domain.model.GameField;
 import ch.hslu.testing.domain.model.Player;
+import ch.hslu.testing.domain.model.Position;
 import org.junit.Before;
 import org.junit.Test;
 

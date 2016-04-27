@@ -5,6 +5,7 @@ import ch.hslu.testing.domain.model.Player;
 import ch.hslu.testing.domain.model.unit.Unit;
 
 /**
+ * Action which can be executed by a single unit of a given player..
  * Created by Christoph on 23.04.2016.
  */
 public abstract class PlayerAction {

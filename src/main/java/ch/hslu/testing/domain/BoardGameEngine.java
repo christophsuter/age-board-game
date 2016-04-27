@@ -23,6 +23,7 @@ public interface BoardGameEngine {
 
     /**
      * In each turn, every player has to preparePlayerAction. When every player has acted, the game state is recalculated.
+     * @throws IllegalAcionException Exception when in wrong state.
      */
     void preparePlayerAction(PlayerAction action) throws IllegalAcionException;
 
@@ -33,6 +34,7 @@ public interface BoardGameEngine {
 
     /**
      * Execute the prepared player actions.
+     * @throws IllegalAcionException Exception when in wrong state.
      */
     void executePlayerActions() throws IllegalAcionException;
 }

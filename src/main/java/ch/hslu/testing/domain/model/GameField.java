@@ -3,6 +3,7 @@ package ch.hslu.testing.domain.model;
 import java.awt.*;
 
 /**
+ * Container for GameField.
  * Created by Christoph on 24.04.2016.
  */
 public class GameField {

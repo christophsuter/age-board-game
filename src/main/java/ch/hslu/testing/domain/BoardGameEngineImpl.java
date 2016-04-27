@@ -4,7 +4,7 @@ import ch.hslu.testing.domain.model.GameState;
 import ch.hslu.testing.domain.model.GameStateFactory;
 import ch.hslu.testing.domain.model.Player;
 import ch.hslu.testing.domain.model.actions.PlayerAction;
-import ch.hslu.testing.domain.model.unit.Position;
+import ch.hslu.testing.domain.model.Position;
 import ch.hslu.testing.domain.model.unit.Unit;
 
 import java.util.HashMap;
@@ -43,8 +43,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     @Override
     public void preparePlayerAction(PlayerAction action) throws IllegalAcionException {
 
-        if(gameState.isFinished()) {
-           throw new IllegalAcionException("Game is finished");
+        if (gameState.isFinished()) {
+            throw new IllegalAcionException("Game is finished");
         }
 
         stagedActions.put(action.getPlayer(), action);
@@ -79,10 +79,10 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         for (Player player : startingPositions.keySet()) {
             List<Unit> units = gameState.getUnits(player);
 
-            for(Unit unit: units) {
+            for (Unit unit : units) {
                 Optional<Unit> enemyInSight = gameState.getEnemyInSight(player, unit);
 
-                enemyInSight.ifPresent(enemy-> enemy.attack(unit.calculateDamage(enemy)));
+                enemyInSight.ifPresent(enemy -> enemy.attack(unit.calculateDamage(enemy)));
             }
         }
 
@@ -93,8 +93,8 @@ public class BoardGameEngineImpl implements BoardGameEngine {
         for (Player player : startingPositions.keySet()) {
             List<Unit> units = gameState.getUnits(player);
 
-            for(int i = 0; i < units.size(); i++) {
-                if(units.get(i).isDead()) {
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).isDead()) {
                     units.remove(i);
                     i--;
                 }

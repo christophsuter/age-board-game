@@ -3,10 +3,11 @@ package ch.hslu.testing.domain.model.actions;
 import ch.hslu.testing.boundry.PlayerMovement;
 import ch.hslu.testing.domain.IllegalAcionException;
 import ch.hslu.testing.domain.model.GameState;
-import ch.hslu.testing.domain.model.unit.Position;
+import ch.hslu.testing.domain.model.Position;
 import ch.hslu.testing.domain.model.unit.Unit;
 
 /**
+ * Action to move Unit around on the field.
  * Created by Christoph on 24.04.2016.
  */
 public class MovementAction extends PlayerAction {

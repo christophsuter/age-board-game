@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
+ * Factory for creating GameState
  * Created by Christoph on 23.04.2016.
  */
 public class GameStateFactory {
@@ -18,7 +19,7 @@ public class GameStateFactory {
 
 
     private GameStateFactory() {
-        //Not needed its a Factory.
+        //Not needed,  it's a Factory.
     }
 
     public static GameState createInitialGameState(Map<Player, Position> startingPositions, int knightCount, int crossbowCount, int pikeCount) {

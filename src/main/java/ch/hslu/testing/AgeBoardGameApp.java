@@ -41,7 +41,6 @@ public class AgeBoardGameApp extends Application<AuthenticationConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<AuthenticationConfiguration> bootstrap) {
-        // Enable variable substitution with environment variables
         bootstrap.setConfigurationSourceProvider(
                 new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
                         new EnvironmentVariableSubstitutor(false)));
