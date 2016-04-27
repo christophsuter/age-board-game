@@ -41,13 +41,19 @@ public class BoardGameEngineImpl implements BoardGameEngine {
     }
 
     @Override
-    public void preparePlayerAction(Player player, PlayerAction action) throws IllegalAcionException {
+    public void preparePlayerAction(PlayerAction action) throws IllegalAcionException {
 
         if(gameState.isFinished()) {
            throw new IllegalAcionException("Game is finished");
         }
 
-        stagedActions.put(player, action);
+        stagedActions.put(action.getPlayer(), action);
+    }
+
+    @Override
+    public Unit getUnit(int unitId) {
+        return gameState.getUnit(unitId)
+                .orElse(null);
     }
 
     @Override

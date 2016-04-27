@@ -3,7 +3,6 @@ package ch.hslu.testing.domain.model;
 import ch.hslu.testing.domain.model.unit.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -23,24 +22,23 @@ public class GameStateFactory {
     }
 
     public static GameState createInitialGameState(Map<Player, Position> startingPositions, int knightCount, int crossbowCount, int pikeCount) {
-        Map<Player, List<Unit>> units = new HashMap<>();
+        List<Unit> units = new ArrayList<>();
 
         GameField gameField = new GameField(MAP_SIZE, MAP_SIZE);
 
         for (Player player : startingPositions.keySet()) {
-            List<Unit> playerUnits = createUnits(knightCount, crossbowCount, pikeCount, startingPositions.get(player), gameField);
-            units.put(player, playerUnits);
+            units.addAll(createUnits(player, knightCount, crossbowCount, pikeCount, startingPositions.get(player), gameField));
         }
 
         return new GameState(gameField, units);
     }
 
-    private static List<Unit> createUnits(int knightCount, int crossbowCount, int pikeCount, Position startingPosition, GameField gameField) {
+    private static List<Unit> createUnits(Player player, int knightCount, int crossbowCount, int pikeCount, Position startingPosition, GameField gameField) {
         List<Unit> units = new ArrayList<>();
 
-        units.addAll(createUnits(knightCount, (i) -> new Knight(startingPosition, gameField)));
-        units.addAll(createUnits(crossbowCount, (i) -> new Crossbow(startingPosition, gameField)));
-        units.addAll(createUnits(pikeCount, (i) -> new Pikeman(startingPosition, gameField)));
+        units.addAll(createUnits(knightCount, (i) -> new Knight(player, startingPosition, gameField)));
+        units.addAll(createUnits(crossbowCount, (i) -> new Crossbow(player, startingPosition, gameField)));
+        units.addAll(createUnits(pikeCount, (i) -> new Pikeman(player, startingPosition, gameField)));
 
         return units;
     }

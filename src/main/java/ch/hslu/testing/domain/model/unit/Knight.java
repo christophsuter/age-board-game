@@ -1,6 +1,7 @@
 package ch.hslu.testing.domain.model.unit;
 
 import ch.hslu.testing.domain.model.GameField;
+import ch.hslu.testing.domain.model.Player;
 
 /**
  * Created by Christoph on 23.04.2016.
@@ -13,8 +14,8 @@ public class Knight extends Unit {
     public static final int KNIGHT_XBOW_ATTACK = 12;
     public static final int KNIGHT_NORMAL_ATTACK = 10;
 
-    public Knight(Position startingPosition, GameField gameField) {
-        super(startingPosition, gameField, "Knight", KNIGHT_HEALTH, KNIGHT_MOVEMENT_SPEED, KNIGHT_ATTACK_RANGE, true, false);
+    public Knight(Player player, Position startingPosition, GameField gameField) {
+        super(player, KNIGHT_HEALTH, startingPosition, gameField, KNIGHT_MOVEMENT_SPEED, KNIGHT_ATTACK_RANGE, true, false);
     }
 
     public int calculateDamage(Unit enemyUnit) {
@@ -23,5 +24,10 @@ public class Knight extends Unit {
         } else {
             return KNIGHT_NORMAL_ATTACK;
         }
+    }
+
+    @Override
+    public String getName() {
+        return "Knight";
     }
 }

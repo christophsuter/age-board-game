@@ -21,8 +21,8 @@ public class MovementAction extends PlayerAction {
     }
 
     public static PlayerAction from(PlayerMovement playerMovement, GameState gameState) throws IllegalAcionException {
-
-        Unit unit = gameState.getUnit(playerMovement.getUnitId());
+        Unit unit = gameState.getUnit(playerMovement.getUnitId())
+                .orElseThrow(() -> new RuntimeException("No Unit found with Id: " + playerMovement.getUnitId()));
 
         if (unit.getMovementSpeed() < Math.abs(playerMovement.getxMovement()) + Math.abs(playerMovement.getyMovement())) {
             throw new IllegalAcionException("Movement is to high. Only " + unit.getMovementSpeed() + " is allowed");

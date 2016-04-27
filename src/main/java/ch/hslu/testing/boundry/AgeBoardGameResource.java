@@ -3,7 +3,6 @@ package ch.hslu.testing.boundry;
 import ch.hslu.testing.domain.BoardGameEngine;
 import ch.hslu.testing.domain.IllegalAcionException;
 import ch.hslu.testing.domain.model.GameState;
-import ch.hslu.testing.domain.model.Player;
 import ch.hslu.testing.domain.model.actions.MovementAction;
 import ch.hslu.testing.domain.model.actions.PlayerAction;
 import com.google.inject.Inject;
@@ -66,14 +65,13 @@ public class AgeBoardGameResource {
     @POST
     @Path("player-movement")
     public void playerMoves(
-            @QueryParam("player") Player player,
             @QueryParam("unitId") int unitId,
             @QueryParam("xMovement") int xMovement,
             @QueryParam("yMovement") int yMovement) {
 
         try {
-            PlayerAction action = MovementAction.from(new PlayerMovement(player, unitId, xMovement, yMovement), getGameState());
-            boardGameEngine.preparePlayerAction(player, action);
+            PlayerAction action = MovementAction.from(new PlayerMovement(unitId, xMovement, yMovement), getGameState());
+            boardGameEngine.preparePlayerAction(action);
         } catch (IllegalAcionException ex) {
             throw new RuntimeException(ex);
         }

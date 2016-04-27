@@ -1,6 +1,8 @@
 package ch.hslu.testing.domain.model.unit;
 
 import ch.hslu.testing.domain.model.GameField;
+import ch.hslu.testing.domain.model.Player;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -9,42 +11,53 @@ import ch.hslu.testing.domain.model.GameField;
 public abstract class Unit {
 
     private static int UNIT_ID;
+
     private final int unitId;
-    private final String name;
-    private final int movementSpeed;
-    private final int attackDistance;
-    private final boolean horse;
-    private final boolean archer;
-    private final GameField gameField;
+
+    private final Player player;
     private int health;
     private Position position;
 
+    private final GameField gameField;
+    private final int movementSpeed;
+    private final int attackDistance;
 
-    public Unit(Position startingPosition, GameField gameField, String name, int health, int movementSpeed, int attackDistance, boolean horse, boolean archer) {
+    private final boolean horse;
+    private final boolean archer;
+
+    public Unit(Player player, int health, Position position, GameField gameField, int movementSpeed, int attackDistance, boolean horse, boolean archer) {
         unitId = UNIT_ID++;
-        this.name = name;
+        this.player = player;
         this.health = health;
+        this.position = position;
         this.gameField = gameField;
         this.movementSpeed = movementSpeed;
         this.attackDistance = attackDistance;
         this.horse = horse;
         this.archer = archer;
-        this.position = startingPosition;
     }
 
+    public void attack(int damage) {
+        this.health -= damage;
+    }
+
+    @JsonIgnore
+    public boolean isDead() {
+        return health <= 0;
+    }
 
     public int getUnitId() {
         return unitId;
     }
 
-    public String getName() { return name; }
+    public Player getPlayer() { return player; }
+
+    public GameField getGameField() {
+        return gameField;
+    }
 
     public int getHealth() {
         return health;
-    }
-
-    public void attack(int damage) {
-        this.health -= damage;
     }
 
     public int getAttackDistance() {
@@ -69,15 +82,9 @@ public abstract class Unit {
         return archer;
     }
 
-    public boolean isDead() {
-        return health <= 0;
-    }
+    public abstract int calculateDamage(Unit enemyUnit);
 
-    public GameField getGameField() {
-        return gameField;
-    }
-
-    abstract public int calculateDamage(Unit enemyUnit);
+    public abstract String getName();
 
     @Override
     public boolean equals(Object o) {

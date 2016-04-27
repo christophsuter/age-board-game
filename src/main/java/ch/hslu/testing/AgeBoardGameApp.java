@@ -39,7 +39,6 @@ public class AgeBoardGameApp extends Application<AuthenticationConfiguration> {
         new AgeBoardGameApp().run(args);
     }
 
-
     @Override
     public void initialize(final Bootstrap<AuthenticationConfiguration> bootstrap) {
         // Enable variable substitution with environment variables

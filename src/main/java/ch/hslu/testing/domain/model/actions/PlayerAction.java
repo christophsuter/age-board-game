@@ -1,6 +1,7 @@
 package ch.hslu.testing.domain.model.actions;
 
 import ch.hslu.testing.domain.model.GameState;
+import ch.hslu.testing.domain.model.Player;
 import ch.hslu.testing.domain.model.unit.Unit;
 
 /**
@@ -16,4 +17,7 @@ public abstract class PlayerAction {
 
     public abstract GameState act(GameState gameState);
 
+    public Player getPlayer() {
+        return actingUnit.getPlayer();
+    }
 }
