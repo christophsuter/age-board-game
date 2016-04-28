@@ -52,7 +52,7 @@ public class GameState {
                 .collect(Collectors.toList());
     }
 
-    public List getUnits(Player player) {
+    public List<Unit> getUnits(Player player) {
         return units.stream()
                 .filter(u -> u.getPlayer() == player)
                 .collect(Collectors.toList());

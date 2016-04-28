@@ -18,7 +18,8 @@ import java.util.Optional;
 public class AgeBoardGameEngineImpl implements AgeBoardGameEngine {
 
     private final Map<Player, Position> startingPositions;
-    private GameState gameState;
+
+    GameState gameState;
     private Map<Player, PlayerAction> stagedActions;
 
     public AgeBoardGameEngineImpl() {
