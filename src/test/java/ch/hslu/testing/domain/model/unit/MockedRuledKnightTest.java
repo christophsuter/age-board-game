@@ -30,7 +30,7 @@ public class MockedRuledKnightTest {
     private static final Player PLAYER = Blue;
 
     private Knight testee;
-    private final Unit archer;
+    private final Unit unit;
     private final int expectedDamage;
 
     @Parameterized.Parameters
@@ -45,8 +45,8 @@ public class MockedRuledKnightTest {
         LOG.info("Run with Parameter: [{}, {}]: ", isArcher, expectedDamage);
 
         //Arrange
-        archer = mock(Unit.class);
-        when(this.archer.isArcher()).thenReturn(isArcher);
+        unit = mock(Unit.class);
+        when(this.unit.isArcher()).thenReturn(isArcher);
 
         this.expectedDamage = expectedDamage;
     }
@@ -59,7 +59,7 @@ public class MockedRuledKnightTest {
     @Test
     public void calculate_damage_vs_parametrized_archer() throws Exception {
         //Act
-        int damage = testee.calculateDamage(archer);
+        int damage = testee.calculateDamage(unit);
 
         //Assert
         assertEquals(damage, expectedDamage);
