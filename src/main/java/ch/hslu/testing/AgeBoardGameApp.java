@@ -1,6 +1,7 @@
 package ch.hslu.testing;
 
 import ch.hslu.testing.boundry.AgeBoardGameResource;
+import ch.hslu.testing.boundry.NonReliableResource;
 import ch.hslu.testing.domain.AgeBoardGameEngine;
 import ch.hslu.testing.domain.AgeBoardGameEngineImpl;
 import ch.hslu.testing.internal.AuthenticationConfiguration;
@@ -70,6 +71,7 @@ public class AgeBoardGameApp extends Application<AuthenticationConfiguration> {
 
         injector = createInjector(conf, env);
         env.jersey().register(injector.getInstance(AgeBoardGameResource.class));
+        env.jersey().register(injector.getInstance(NonReliableResource.class));
 
         LOG.info("Application up and running.");
     }

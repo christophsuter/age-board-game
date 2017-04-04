@@ -6,6 +6,8 @@ server:
   connector:
     type: http
     port: 8080
+    acceptorThreads: 500
+    selectorThreads: 500
   #registerDefaultExceptionMappers: false
 
 logging:
