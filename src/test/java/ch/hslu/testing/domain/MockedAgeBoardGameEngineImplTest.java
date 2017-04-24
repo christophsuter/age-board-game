@@ -9,6 +9,10 @@ import ch.hslu.testing.domain.model.unit.Unit;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -69,7 +73,20 @@ public class MockedAgeBoardGameEngineImplTest {
         when(unit.getAttackDistance()).thenReturn(2);
         when(unit.getGameField()).thenReturn(new GameField(10, 10));
 
+        doAnswer(this::doSomething).when(unit).setPosition(any(Position.class));
+
         return unit;
     }
+
+    private Void doSomething(InvocationOnMock invocation) {
+        Object[] args = invocation.getArguments();
+        System.out.println("called with arguments: " + Arrays.toString(args));
+        return null;
+    }
+
+    private Answer newAnswer() {
+        return null;
+    }
+
 
 }

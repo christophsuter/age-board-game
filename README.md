@@ -25,5 +25,5 @@ The application can be accessed on the following URL (defined in conf.yml):
 
 `http://localhost:8080/api/`
 
-##Swagger (Description of the API)
+## Swagger (Description of the API)
 `http://localhost:8080/api/doc/`

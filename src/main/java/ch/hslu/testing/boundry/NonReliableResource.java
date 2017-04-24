@@ -1,7 +1,5 @@
 package ch.hslu.testing.boundry;
 
-import ch.hslu.testing.AgeBoardGameApp;
-import ch.hslu.testing.domain.model.GameState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,11 +9,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static java.lang.Integer.MAX_VALUE;
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -46,9 +44,11 @@ public class NonReliableResource {
      * @return List of Ninjas.
      */
     @GET
-    public List<Ninja> getNinjas() {
+    public List<String> getNinjas() {
         doSomeWeirdStuff();
-        return ninjas;
+        return ninjas.stream().
+                map(Ninja::getName)
+                     .collect(toList());
     }
 
     /**
@@ -62,8 +62,8 @@ public class NonReliableResource {
     public Ninja getNinjaByName(@PathParam("name") String name) {
         doSomeWeirdStuff();
         Optional<Ninja> first = ninjas.stream()
-                .filter(p -> p.getName().equals(name))
-                .findFirst();
+                                      .filter(p -> p.getName().equals(name))
+                                      .findFirst();
 
         return first.orElseThrow(() -> new IllegalArgumentException("Ninja " + name + " not found"));
     }
