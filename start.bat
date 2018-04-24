@@ -1,0 +1,1 @@
+java -jar target\age-board-game-1.0-SNAPSHOT.jar server target/classes/conf/conf.yml
