@@ -11,12 +11,12 @@ Building Project:
 
 Build Project with Javadoc (used for Swagger) and create distribution directory:
 
-`mvn clean package -Pattach-src-and-javadoc -Pdistribution`
+`mvn clean package -Pattach-src-and-javadoc`
 
 ## Start Application
 Starting the application:
 
-`cd target/age-board-game-${version}-bin`
+`execute start.bat`
 
 `java -jar age-board-game-${version}.jar server conf.conf`
 

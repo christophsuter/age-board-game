@@ -1,10 +1,8 @@
 package ch.hslu.testing;
 
 import ch.hslu.testing.boundry.AgeBoardGameResource;
-import ch.hslu.testing.boundry.NonReliableResource;
 import ch.hslu.testing.domain.AgeBoardGameEngine;
 import ch.hslu.testing.domain.AgeBoardGameEngineImpl;
-import ch.hslu.testing.internal.AuthenticationConfiguration;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,6 +11,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.dropwizard.Application;
+import io.dropwizard.Configuration;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
@@ -31,7 +30,7 @@ import java.util.TimeZone;
 /**
  * Created by Christoph on 22.04.2016.
  */
-public class AgeBoardGameApp extends Application<AuthenticationConfiguration> {
+public class AgeBoardGameApp extends Application<Configuration> {
 
     private static final Logger LOG = LoggerFactory.getLogger(AgeBoardGameApp.class);
     private Injector injector;
@@ -41,25 +40,19 @@ public class AgeBoardGameApp extends Application<AuthenticationConfiguration> {
     }
 
     @Override
-    public void initialize(final Bootstrap<AuthenticationConfiguration> bootstrap) {
-        bootstrap.setConfigurationSourceProvider(
-                new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(),
-                        new EnvironmentVariableSubstitutor(false)));
-
+    public void initialize(final Bootstrap<Configuration> bootstrap) {
+        bootstrap.setConfigurationSourceProvider(new SubstitutingSourceProvider(bootstrap.getConfigurationSourceProvider(), new EnvironmentVariableSubstitutor(false)));
         bootstrap.getObjectMapper().setTimeZone(TimeZone.getDefault());
-        bootstrap.getObjectMapper().setDateFormat(new StdDateFormat().withTimeZone(TimeZone.getTimeZone("UTC")));
-
+        bootstrap.getObjectMapper().setDateFormat((new StdDateFormat()).withTimeZone(TimeZone.getTimeZone("UTC")));
         bootstrap.getObjectMapper().configure(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS, false);
         bootstrap.getObjectMapper().configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         bootstrap.getObjectMapper().configure(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE, false);
         bootstrap.getObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
         bootstrap.addBundle(new AssetsBundle("/apidocs", "/doc", "index.html", "apidocs"));
     }
 
     @Override
-    public void run(AuthenticationConfiguration conf, Environment env) {
-        // setup CORS
+    public void run(Configuration conf, Environment env) {
         FilterRegistration.Dynamic filter = env.servlets().addFilter("CORS", CrossOriginFilter.class);
         filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
         filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM, "GET,PUT,POST");
@@ -71,17 +64,16 @@ public class AgeBoardGameApp extends Application<AuthenticationConfiguration> {
 
         injector = createInjector(conf, env);
         env.jersey().register(injector.getInstance(AgeBoardGameResource.class));
-        env.jersey().register(injector.getInstance(NonReliableResource.class));
 
         LOG.info("Application up and running.");
     }
 
-    private Injector createInjector(final AuthenticationConfiguration conf,
+    private Injector createInjector(final Configuration conf,
                                     final Environment env) {
         return Guice.createInjector(new AbstractModule() {
             @Override
             protected void configure() {
-                bind(AuthenticationConfiguration.class).toInstance(conf);
+                bind(Configuration.class).toInstance(conf);
                 bind(AgeBoardGameEngine.class).to(AgeBoardGameEngineImpl.class);
                 bind(ObjectMapper.class).toInstance(env.getObjectMapper());
             }

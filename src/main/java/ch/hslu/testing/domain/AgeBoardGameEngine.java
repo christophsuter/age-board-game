@@ -14,7 +14,6 @@ public interface AgeBoardGameEngine {
      */
     void initGame();
 
-
     /**
      * Get the current state of the Game.
      * @return GameState
